@@ -1,11 +1,13 @@
 # %%
 import numpy as np
 import requests
+import io
 import re
 from bs4 import BeautifulSoup
 from PyPDF2 import PdfFileReader
 from datetime import datetime
 from datetime import timedelta
+#import urllib3
 from urllib.request import urlopen
 import matplotlib.pyplot as plt
 
@@ -24,7 +26,7 @@ def find_files(url):
     return(files)
 
 def extract_cases(url, country):
-    print('Scraping'+url)
+    print('Scraping '+url)
     # Scrape page for file
     r = requests.get(url)
     
@@ -61,8 +63,7 @@ cases = [int(i) for i in cases]
 dates = []
 for date in np.arange(1,get_latest+1):
     dates.append((datetime.today() - timedelta(days=int(date))).strftime('%b-%d'))
-dates = dates[::-1]
-
+dates=dates[::-1]
 # Estimate 7 day average
 avgs = [0,]*7
 for case in cases[7:]:
@@ -77,4 +78,3 @@ ax.plot(avgs, lw =4, label='7-day avg')
 ax.legend(loc='best', fontsize=16)
 ax.set_title('Daily New Cases in Brazil', fontsize=18)
 plt.show()
-
