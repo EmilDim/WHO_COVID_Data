@@ -61,6 +61,7 @@ cases = [int(i) for i in cases]
 dates = []
 for date in np.arange(1,get_latest+1):
     dates.append((datetime.today() - timedelta(days=int(date))).strftime('%b-%d'))
+dates = dates[::-1]
 
 # Estimate 7 day average
 avgs = [0,]*7
